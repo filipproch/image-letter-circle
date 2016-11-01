@@ -1,0 +1,42 @@
+<!doctype html>
+
+<html>
+  <head>
+    <title>image-letter-circle test</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../image-letter-circle.html">
+  </head>
+  <body>
+
+    <test-fixture id="basic">
+      <template>
+        <image-letter-circle></image-letter-circle>
+      </template>
+    </test-fixture>
+
+    <script>
+      suite('image-letter-circle', function() {
+        var element
+        setup(function () {
+          element = fixture('image-letter-circle-fixture')
+        })
+
+        test('instantiating the element works', function() {
+          assert.equal(element.is, 'image-letter-circle');
+        });
+
+        test('parsing supported letter from name', function () {
+          element.iconText = 'Peter'
+          assert.equal(element.letter, 'p')
+        })
+
+        test()
+
+      });
+    </script>
+  </body>
+</html>

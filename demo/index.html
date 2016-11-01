@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+  <head>
+    <title>image-letter-circle demo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+
+    <link rel="import" href="../image-letter-circle.html">
+
+    <style is="custom-style" include="demo-pages-shared-styles">
+    </style>
+  </head>
+  <body>
+
+    <div class="vertical-section-container centered">
+      <h3>Basic image-letter-circle Demo</h3>
+      <demo-snippet>
+        <template>
+          <image-letter-circle></image-letter-circle>
+        </template>
+      </demo-snippet>
+    </div>
+
+    <div class="vertical-section-container centered">
+      <h3>Custom text passed as parameter</h3>
+      <demo-snippet>
+        <template>
+          <image-letter-circle
+                  icon-text="Steve">
+          </image-letter-circle>
+        </template>
+      </demo-snippet>
+    </div>
+
+    <div class="vertical-section-container centered">
+      <h3>Custom text & existing image passed as parameter</h3>
+      <demo-snippet>
+        <template>
+          <image-letter-circle
+                  image-url="https://placeimg.com/64/64/people"
+                  icon-text="Steve">
+          </image-letter-circle>
+        </template>
+      </demo-snippet>
+    </div>
+
+    <div class="vertical-section-container centered">
+      <h3>Custom text & non existent image passed as parameter</h3>
+      <demo-snippet>
+        <template>
+          <image-letter-circle
+                  image-url="https://thisurlis.fake"
+                  icon-text="Steve">
+          </image-letter-circle>
+        </template>
+      </demo-snippet>
+    </div>
+
+  </body>
+</html>

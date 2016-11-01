@@ -1,0 +1,159 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<link rel="import" href="../iron-image/iron-image.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+
+<link rel="import" href="./letter-icons.html">
+
+<!--
+`image-letter-circle`
+
+
+@demo demo/index.html 
+-->
+
+<dom-module id="image-letter-circle">
+    <template>
+        <style>
+            :host {
+                display: block;
+                position: relative;
+                --circle-size: 42px;
+                width: var(--circle-size);
+                height: var(--circle-size);
+                --circle-color: var(--primary-color, #333333);
+                background-color: var(--circle-color);
+                border-radius: 50%;
+                overflow: hidden;
+                padding: 0;
+            }
+
+            #centerImage {
+                position: absolute;
+                z-index: 5;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+            }
+
+            #centerIcon {
+                position: absolute;
+                left: 0;
+                top: 0;
+                --iron-icon-height: 50%;
+                --iron-icon-width: 50%;
+                margin: 25%;
+                color: white;
+            }
+
+            [hidden] {
+                display: none !important;
+            }
+        </style>
+
+        <iron-image id="centerImage" src="[[imageUrl]]" sizing="cover"
+                    error="{{imageError}}" loaded="{{imageLoaded}}"></iron-image>
+        <iron-icon id="centerIcon" class="inner-item" icon="[[_computeIconName(iconText, fallbackIcon)]]"
+                   hidden$="[[imageLoaded]]"></iron-icon>
+    </template>
+
+    <script>
+
+      (function () {
+        'use strict'
+
+        // Supported alphabet 'abcdefghijklmnopqrstuvwxyz'
+
+        class ImageLetterCircle {
+
+          beforeRegister () {
+            this.is = 'image-letter-circle'
+            this.properties = {
+              /**
+               * Url of the image to load
+               */
+              imageUrl: {
+                type: String,
+                value: null
+              },
+
+              /**
+               * Text that letter will be extracted from and used as icon
+               */
+              iconText: {
+                type: String,
+                value: null
+              },
+
+              /**
+               * Icon to use if the first letter is not supported / image load error
+               */
+              fallbackIcon: {
+                type: String,
+                value: 'letter:a'
+              },
+
+              /**
+               * Letter computed from iconText
+               */
+              letter: {
+                type: String,
+                computed: '_computeLetterFromText(iconText)'
+              },
+
+              /**
+               * Icon
+               */
+              icon: {
+                type: String,
+                computed: '_computeIconName(letter, fallbackIcon)'
+              }
+            }
+            this.observers = [
+              '_handleImageError(imageError)',
+              '_handleImageLoaded(imageLoaded)'
+            ]
+          }
+
+          _computeLetterFromText (text) {
+            if (text && text.length > 0) {
+              let letter = this.iconText.substr(0, 1)
+              if (letter.match(/[a-zA-Z]/i) !== null) {
+                return letter.toLowerCase()
+              }
+            }
+            return null
+          }
+
+          _computeIconName () {
+            if (this.letter) {
+              return `letter:${this.letter}`
+            } else {
+              return this.fallbackIcon
+            }
+          }
+
+          _handleImageLoaded () {
+            this._updateBackground()
+          }
+
+          _handleImageError () {
+            this._updateBackground()
+          }
+
+          _updateBackground () {
+            if (this.$.centerImage.loaded) {
+              this.style.backgroundColor = 'transparent'
+            } else {
+              this.style.backgroundColor = ''
+            }
+          }
+
+        }
+
+        Polymer(ImageLetterCircle)
+      })()
+    </script>
+</dom-module>
